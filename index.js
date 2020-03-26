@@ -4,7 +4,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios')
 let covid
 const { getCode, getName } = require('country-list');
-const port = 4000 || process.env.PORT
+const port = process.env.PORT || 4000
 
 app.get('/health',(req,res)=>{
     res.json({
