@@ -61,7 +61,7 @@ bot.on('message', async (msg) => {
     bot.sendMessage(chatId, `name: ${name}
 Cases: ${response.cases}
 Today's Cases: ${response.todayCases}
-Daths: ${response.deaths}
+Deaths: ${response.deaths}
 Today's Deaths: ${response.todayDeaths}
 Recovered: ${response.recovered}
 Active: ${response.active}
