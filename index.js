@@ -14,7 +14,7 @@ app.get('/health',(req,res)=>{
 })
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_KEY;
-// Create a bot that uses 'polling' to fetch new updates
+// Create a bot that uses 'polling' to fetch new update
 let covidFunc = async(code)=>{
     try {
     covid = await axios.get(`http://covid19.soficoop.com/country/${code}`)
