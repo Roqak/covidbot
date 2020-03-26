@@ -4,7 +4,14 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios')
 let covid
 const { getCode, getName } = require('country-list');
+const port = 4000 || process.env.PORT
 
+app.get('/health',(req,res)=>{
+    res.json({
+        'status': 200,
+        'message': "online"
+    })
+})
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_KEY;
 // Create a bot that uses 'polling' to fetch new updates
@@ -29,8 +36,12 @@ let covidFunc = async(code)=>{
 const bot = new TelegramBot(token, {polling: true});
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', async (msg) => {
+    if(msg.text === "/start"){
+        bot.sendMessage(msg.chat.id, `Welcome ${msg.chat.first_name}, Tell me the Name or Code of a country e.g (Nigeria or NG), and I'll in turn give the Covid-19 status of the country`);
+    }else{
     try {
         const chatId = msg.chat.id;
+        
 // console.log(msg);
     // send a message to the chat acknowledging receipt of their message
     let response = await covidFunc(msg.text)
@@ -68,8 +79,9 @@ Timestamp: ${response.timestamp}`);
         console.log(error)
         bot.sendMessage(chatId, `error: ${error}`);
     }
+}
     
 });
-app.listen('4000',()=>{
+app.listen(port,()=>{
     console.log("listening............")
 });
