@@ -3,13 +3,15 @@ require('dotenv').config()
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios')
 let covid
+let numberofcalls=0;
 const { getCode, getName } = require('country-list');
 const port = process.env.PORT || 4000
 
 app.get('/health',(req,res)=>{
     res.json({
         'status': 200,
-        'message': "online"
+        'message': "online",
+        'numberOfCalls':numberofcalls
     })
 })
 // replace the value below with the Telegram token you receive from @BotFather
@@ -36,6 +38,7 @@ let covidFunc = async(code)=>{
 const bot = new TelegramBot(token, {polling: true});
 bot.on("polling_error", (err) => console.log(err));
 bot.on('message', async (msg) => {
+    numberofcalls +=1;
     if(msg.text === "/start"){
         bot.sendMessage(msg.chat.id, `Welcome ${msg.chat.first_name}, Tell me the Name or Code of a country e.g (Nigeria or NG), and I'll in turn give the Covid-19 status of the country`);
     }else{
